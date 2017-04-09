@@ -1,0 +1,3 @@
+function result = tangentialForce(F, eps_ref, neighborA, neighborB)
+  result = eps_ref * neighborA + eps_ref*neighborB - F
+end

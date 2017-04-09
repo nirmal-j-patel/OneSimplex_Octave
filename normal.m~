@@ -1,0 +1,4 @@
+function [result] = normal(pointA, pointB)
+  AB = B - A
+  normalized = AB/norm(AB, 2)
+end
