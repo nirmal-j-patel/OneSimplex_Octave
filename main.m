@@ -59,35 +59,30 @@ for iteration = 1:100
     y_high = min(size(img)(2), y+radius);
 
     window = img(x_low:x_high, y_low:y_high);
+    center = size(window)/2;
 
     if isempty(window)
-      printf("Window empty at position %s", B);
+      printf("Window empty at position %s\n", B);
     else
 # we want to find out the point with greatest value in the window. if there are multiple points with highest value, select the point that is closest to the current point
-      tmpmax = window(1);
-      x2 = 1;
-      y2 = 1;
 
-      for window_idx = 1:numel(window);
-        val = window(window_idx);
-        if val > tmpmax
-          tmpmax = val;
-          [x2, y2] = ind2sub(size(window), idx);
-        elseif val == tmpmax
-          [tmp1, tmp2] = ind2sub(size(window), idx);
-
-          if norm(B-[tmp1, tmp2]) < norm(B-[x_low+x2, y_low+y2])
-            x2 = tmp1;
-            y2 = tmp2;
-          end
-        end
-      end
+      # get the list of all points with highest value in the window      
+      maxvalue = max(window(:));
+      [x2 y2] = ind2sub(size(window),find(window==maxvalue));
+      
+      #find the max value that is closest to the center
+      distance_from_center = repmat(center, numel(x2), 1) - [x2, y2];
+      norms = sqrt(sum(distance_from_center.^2,2));
+      
+      [_ norm_index] = min(norms);
+      final_index_x = x2(norm_index);
+      final_index_y = y2(norm_index);
 
 		# use the current point if the greatest change is zero
-      if tmpmax == 0
+      if maxvalue == 0
         G_i = B;
       else
-        G_i = [x2, y2] + [x_low, y_low];
+        G_i = [final_index_x, final_index_y] + [x_low, y_low];
       end
 
       F_ext = beta_grad*dot((G_i - B), normal_vec)*normal_vec;
