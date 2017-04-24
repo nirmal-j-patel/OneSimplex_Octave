@@ -97,9 +97,9 @@ for iteration = 1:100
       #  beta = 1;
       #  gamma = 0.8;
       #end
-      alpha = 0;
+      alpha = 0.8;
       beta = 1;
-      gamma = 1;
+      gamma = 0.8;
       
 
       
@@ -113,7 +113,7 @@ for iteration = 1:100
 
   image(img);
   hold on;
-  plot(points(:, 1), points(:, 2));
+  plot(points(:, 2), points(:, 1));
   xlim([0 170]);
   ylim([0 170]);
 
