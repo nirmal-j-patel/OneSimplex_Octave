@@ -1,7 +1,0 @@
-function result = L(r, d, phi)
-  if abs(phi) < pi/2
-    eps = 1;
-  elseif abs(phi) > pi/2
-    eps = -1;
-  end
-end

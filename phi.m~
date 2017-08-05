@@ -1,2 +1,0 @@
-function result = phi(currPoint, neighbor1, neighbor2)
-end
